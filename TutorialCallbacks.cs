@@ -44,18 +44,38 @@ public class TutorialCallbacks : ScriptableObject
     public bool SceneCalledMain()
     {
         var sceneName = UnityEditor.SceneManagement.EditorSceneManager.GetActiveScene().name;
-        return sceneName.ToLower() == "main";
+        if (sceneName.ToLower() != "main")
+        {
+            Criterion.globalLastKnownError = $"The active scene is named \"{sceneName}\", but it should be named \"Main\".";
+            return false;
+        }
+        return true;
     }
 
     //step 17, step 27
     public bool DoesGameObjectWithNameExist(string name)
     {
-        return GameObject.Find(name) != null;
+        if (GameObject.Find(name) == null)
+        {
+            Criterion.globalLastKnownError = $"Scene is missing a GameObject named \"{name}\".";
+            return false;
+        }
+        return true;
     }
     //step 20
     public bool ObjectSelected(string name)
     {
-        return Selection.activeGameObject && Selection.activeGameObject.name == name; 
+        if (Selection.activeGameObject == null)
+        {
+            Criterion.globalLastKnownError = "No GameObject is currently selected.";
+            return false;
+        }
+        if (Selection.activeGameObject.name != name)
+        {
+            Criterion.globalLastKnownError = $"The selected object is \"{Selection.activeGameObject.name}\", but it should be \"{name}\".";
+            return false;
+        }
+        return true;
     }
 
     //step 23
@@ -66,7 +86,29 @@ public class TutorialCallbacks : ScriptableObject
     }
     public bool BallMovedDistance()
     {
-        return (GameObject.Find("Ball").transform.position - initialPos).magnitude > 1;
+        var ball = GameObject.Find("Ball");
+        if (ball == null)
+        {
+            Criterion.globalLastKnownError = "Could not find a GameObject named \"Ball\".";
+            return false;
+        }
+        
+        var dist = (ball.transform.position - initialPos).magnitude;
+        if (dist <= 1)
+        {
+            Debug.Log($"DISTANCE: {dist:F2} {dist} {ball.transform.position} {initialPos}");
+            Criterion.globalLastKnownError = $"The Ball has moved {dist:F2} units, but needs to move at least 1 unit.";
+            //if (dist == 0)
+            //{
+            //    Criterion.globalLastKnownError = "The ball hasn't been moved.";
+            //} 
+            //else if (dist <= 1)
+            //{
+            //    Criterion.globalLastKnownError = "The ball has moved a little bit, but move it move.";
+            //}
+            return false;
+        }
+        return true;
     }
 
     //step 25
@@ -82,10 +124,33 @@ public class TutorialCallbacks : ScriptableObject
     }*/
     public bool SpriteModified()
     {
-        var sr = GameObject.Find("Ball").GetComponent<SpriteRenderer>();
-        if (sr == null) return false;
-        return sr.color.Equals(Color.white) == false && (sr.flipX || sr.flipY);
-        //return initialColor.Equals(sr.color) == false && (initialFlip != sr.flipX || initialFlipY != sr.flipY);
+        var ball = GameObject.Find("Ball");
+        if (ball == null)
+        {
+            Criterion.globalLastKnownError = "Could not find a GameObject named \"Ball\".";
+            return false;
+        }
+
+        var sr = ball.GetComponent<SpriteRenderer>();
+        if (sr == null)
+        {
+            Criterion.globalLastKnownError = "The \"Ball\" object is missing a SpriteRenderer component.";
+            return false;
+        }
+
+        if (sr.color.Equals(Color.white))
+        {
+            Criterion.globalLastKnownError = "The Ball's color is still white. Please change it to something else.";
+            return false;
+        }
+
+        if (!sr.flipX && !sr.flipY)
+        {
+            Criterion.globalLastKnownError = "The Ball sprite is not flipped. Please flip it on either the X or Y axis.";
+            return false;
+        }
+
+        return true;
     }
 
     //step 26
@@ -93,28 +158,75 @@ public class TutorialCallbacks : ScriptableObject
     {
         var all = GameObject.FindObjectsByType <GameObject>(FindObjectsSortMode.None);
         int ballCount = 0;
-        for (int i=0; i<all.Length; i++) {
-            if (all[i].name.Contains("Ball")) {
+        foreach (var obj in all) {
+            if (obj.name.Contains("Ball")) {
                 ballCount++;
             }
         }
-        return ballCount >= requiredCount;
+        
+        if (ballCount < requiredCount)
+        {
+            Criterion.globalLastKnownError = $"Found {ballCount} objects with \"Ball\" in the name, but at least {requiredCount} are required.";
+            return false;
+        }
+        return true;
     }
     public bool BallsInDifferentLocations()
     {
-        return CommonTutorialCallbacks.ObjectsInDifferentLocations(CommonTutorialCallbacks.GameObjectsContaining("Ball"));
+        var balls = GameObject.FindObjectsByType<GameObject>(FindObjectsSortMode.None)
+                              .Where(obj => obj.name.Contains("Ball"))
+                              .ToArray();
+
+        if (balls.Length < 2)
+        {
+             // If fewer than 2 balls, trivial success or failure depending on requirement. 
+             // Original function didn't check count explicitely but implied multiple.
+             // We'll skip error if < 2 as separation implies comparison.
+             // But if specific tutorial step requires multiple balls, BallCount should have caught it.
+        }
+
+        for(int i=0; i<balls.Length; i++)
+        {
+             for(int j=i+1; j<balls.Length; j++)
+             {
+                 if (balls[i].transform.position == balls[j].transform.position)
+                 {
+                      Criterion.globalLastKnownError = $"Two balls are at the same position {balls[i].transform.position}: \"{balls[i].name}\" and \"{balls[j].name}\". Move them apart."; 
+                      return false;
+                 }
+             }
+        }
+        return true;
     }
 
     //step 27
     public bool AllBallsGreen()
     {
         var all = GameObject.FindObjectsByType <GameObject>(FindObjectsSortMode.None);
-        //Debug.Log(all.Length);
-        for (int i=0; i<all.Length; i++) {
-            if (all[i].name.Contains("Ball")) {
-                var sr = all[i].GetComponent<SpriteRenderer>();
-                //Debug.Log(sr.color);
-                if (sr.color.Equals(Color.green) == false) return false;
+        var balls = all.Where(x => x.name.Contains("Ball")).ToList();
+        
+        if (balls.Count == 0)
+        {
+             // If no balls, strict check would fail, logic depends on if a ball is expected.
+             // Original loop would return true if empty list (loop 0 times, return true).
+             // We will assume "All existing balls must be green", so 0 balls is effectively true? 
+             // Or likely user has balls by now.
+             // I'll keep it true if empty to match original logic, but usually step implies existence.
+             // But let's check if we should error. Usually there's a BallCount check before.
+             return true;
+        }
+
+        foreach (var ball in balls) {
+            var sr = ball.GetComponent<SpriteRenderer>();
+            if (sr == null)
+            {
+                 Criterion.globalLastKnownError = $"The object \"{ball.name}\" is missing a SpriteRenderer.";
+                 return false;
+            }
+            if (!sr.color.Equals(Color.green))
+            {
+                 Criterion.globalLastKnownError = $"The object \"{ball.name}\" is not green. Please change its color.";
+                 return false;
             }
         }
         return true;
@@ -123,83 +235,85 @@ public class TutorialCallbacks : ScriptableObject
     public bool AtLeastOneRigidbody()
     {
         var all = GameObject.FindObjectsByType <Rigidbody2D>(FindObjectsSortMode.None);
-        return all.Length > 0; 
+        if (all.Length == 0)
+        {
+            Criterion.globalLastKnownError = "The Scene needs at least one GameObject with a Rigidbody2D component.";
+            return false;
+        }
+        return true; 
     }
 
     //step 34
     public bool OneBallAboveTheOther()
     {
-        Transform highestBall = null;
-        Transform lowestBall = null;
-
         var all = GameObject.FindObjectsByType<GameObject>(FindObjectsSortMode.None);
-        if (all.Length <= 1) return false;
+        var balls = all.Where(x => x.name.Contains("Ball")).ToList();
 
-        bool atLeastOneNonMovingBallBelowAMovingBall = false;
-
-        for (int i = 0; i < all.Length; i++)
+        if (balls.Count < 2)
         {
-            var ball = all[i];
-            if (ball.name.Contains("Ball"))
+            Criterion.globalLastKnownError = "You need at least two balls for this step.";
+            return false;
+        }
+
+        var movingBalls = balls.Where(b => b.GetComponent<Rigidbody2D>() != null).ToList();
+        var staticBalls = balls.Where(b => b.GetComponent<Rigidbody2D>() == null).ToList();
+
+        if (movingBalls.Count == 0)
+        {
+            Criterion.globalLastKnownError = "At least one Ball must have a Rigidbody2D component (to be the moving ball).";
+            return false;
+        }
+
+        if (staticBalls.Count == 0)
+        {
+            Criterion.globalLastKnownError = "At least one Ball must NOT have a Rigidbody2D component (to be the static obstacle).";
+            return false;
+        }
+
+        foreach (var moving in movingBalls)
+        {
+            var sr = moving.GetComponent<SpriteRenderer>();
+            if (!sr) continue; // Should have been caught by previous steps, or we ignore.
+
+            foreach (var stat in staticBalls)
             {
-                if (ball.GetComponent<Rigidbody2D>())
-                {
-                    var sr = ball.GetComponent<SpriteRenderer>();
-                    if (sr)
-                    {
-                        for (int j = 0; j < all.Length; j++)
-                        {
-                            if (i == j) continue;
+                // Check if moving is above static
+                // Original logic: ball.transform.position.y - sr.bounds.size.y > other.transform.position.y
+                // And X alignment check
+                
+                bool isAbove = (moving.transform.position.y - sr.bounds.size.y) > stat.transform.position.y;
+                
+                // X alignment: (ball.x - size.x < other.x) && (ball.x + size.x > other.x)
+                // This checks if the moving ball's horizontal extent INCLUDES the static ball's center.
+                // It simplifies "is strictly above".
+                
+                bool xAligned = (moving.transform.position.x - sr.bounds.size.x < stat.transform.position.x) && 
+                                (moving.transform.position.x + sr.bounds.size.x > stat.transform.position.x);
 
-                            var other = all[j];
-
-                            if (other.GetComponent<Rigidbody2D>() == null)
-                            {
-                                if (ball.transform.position.y - sr.bounds.size.y > other.transform.position.y)
-                                {
-                                    if ((ball.transform.position.x - sr.bounds.size.x < other.transform.position.x) && (ball.transform.position.x + sr.bounds.size.x > other.transform.position.x))
-                                    {
-                                        atLeastOneNonMovingBallBelowAMovingBall = true;
-                                    }
-                                }
-                        }
-                        }
-                    }
-
-                }
-
-                if (highestBall == null)
+                if (isAbove && xAligned)
                 {
-                    highestBall = ball.transform;
+                    return true;
                 }
-                if (lowestBall == null)
-                {
-                    lowestBall = ball.transform;
-                }
-                if (ball.transform.position.y > highestBall.transform.position.y)
-                {
-                    highestBall = ball.transform;
-                }
-                if (ball.transform.position.y < lowestBall.transform.position.y)
-                {
-                    lowestBall = ball.transform;
-                }
-
             }
         }
-        //return lowestBall.GetComponent<Rigidbody2D>() == null;
-        return atLeastOneNonMovingBallBelowAMovingBall;
+
+        Criterion.globalLastKnownError = "Position a moving Ball (with Rigidbody2D) above a static Ball (no Rigidbody2D) so that it will fall onto it.";
+        return false;
     }
 
     //step 36
     public bool AllBallsHaveCircleColliders() 
     {
         var all = GameObject.FindObjectsByType <GameObject>(FindObjectsSortMode.None);
-        for (int i=0; i<all.Length; i++) {
-            if (all[i].name.Contains("Ball")) {
-                var c = all[i].GetComponent<CircleCollider2D>();
-                if (c == null) return false;
-            }
+        var balls = all.Where(x => x.name.Contains("Ball"));
+        
+        foreach (var ball in balls)
+        {
+             if (ball.GetComponent<CircleCollider2D>() == null)
+             {
+                  Criterion.globalLastKnownError = $"The object \"{ball.name}\" needs a CircleCollider2D component.";
+                  return false;
+             }
         }
         return true;
     }
@@ -207,15 +321,22 @@ public class TutorialCallbacks : ScriptableObject
     //step 37
     public bool ColliderSizeLessThanOriginal()//bleh, hard coded the original size as we only need it for this tute
     {
-
         var all = GameObject.FindObjectsByType<GameObject>(FindObjectsSortMode.None);
-        for (int i = 0; i < all.Length; i++)
+        var balls = all.Where(x => x.name.Contains("Ball"));
+
+        foreach (var ball in balls)
         {
-            if (all[i].name.Contains("Ball"))
-            {
-                var c = all[i].GetComponent<CircleCollider2D>();
-                if (c == null || c.radius >= 1.28f) return false;
-            }
+             var c = ball.GetComponent<CircleCollider2D>();
+             if (c == null)
+             {
+                  Criterion.globalLastKnownError = $"The object \"{ball.name}\" needs a CircleCollider2D component.";
+                  return false;
+             }
+             if (c.radius >= 1.28f)
+             {
+                  Criterion.globalLastKnownError = $"The CircleCollider2D on \"{ball.name}\" is too large (radius: {c.radius:F2}). Please reduce the size by editing the Collider in the Scene view.";
+                  return false;
+             }
         }
         return true;
     }
@@ -352,10 +473,9 @@ public class TutorialCallbacks : ScriptableObject
         return true;
     }
 
-    static List<GameObject> list = new List<GameObject>();
     List<GameObject> FiveObjectsStartingWith(string name)
     {
-        list.Clear();
+        var list = new List<GameObject>();
         var all = GameObject.FindObjectsByType<GameObject>(FindObjectsSortMode.None);
         for (int i = 0; i < all.Length; i++)
         {
@@ -365,13 +485,19 @@ public class TutorialCallbacks : ScriptableObject
             }
         }
 
-        if (list.Count != 5) return null;
+        if (list.Count != 5)
+        {
+             Criterion.globalLastKnownError = $"Found {list.Count} objects starting with \"{name}\", but exactly 5 are required.";
+             // We return list anyway so caller can inspect what we found, or return null if we want to enforce strictness.
+             // Original returned null.
+             return null;
+        }
         else return list;
     }
 
     List<GameObject> FiveObjectsContaining(string name)
     {
-        list.Clear();
+        var list = new List<GameObject>();
         var all = GameObject.FindObjectsByType<GameObject>(FindObjectsSortMode.None);
         for (int i = 0; i < all.Length; i++)
         {
@@ -381,24 +507,35 @@ public class TutorialCallbacks : ScriptableObject
             }
         }
 
-        if (list.Count != 5) return null;
+        if (list.Count != 5)
+        {
+            Criterion.globalLastKnownError = $"Found {list.Count} objects containing \"{name}\", but exactly 5 are required.";
+            return null;
+        }
         else return list;
     }
 
-    static List<Color> colorlist = new List<Color>();
     public bool ColouredInvaders()
     {
         var invaders = FiveObjectsContaining("Invader");
         if (invaders == null) return false;
 
-        colorlist.Clear();
+        var colorlist = new List<Color>();
         foreach (var invader in invaders)
         {
             var sr = invader.GetComponent<SpriteRenderer>();
-            if (sr == null) return false;
+            if (sr == null)
+            {
+                Criterion.globalLastKnownError = $"The object \"{invader.name}\" is missing a SpriteRenderer.";
+                return false;
+            }
 
             var color = sr.color;
-            if (colorlist.Contains(color)) return false;
+            if (colorlist.Contains(color))
+            {
+                Criterion.globalLastKnownError = $"The object \"{invader.name}\" has the same color {color} as another Invader. Each Invader must have a unique color.";
+                return false;
+            }
 
             colorlist.Add(color);
         }
@@ -413,13 +550,16 @@ public class TutorialCallbacks : ScriptableObject
 
         foreach (var invader in invaders)
         {
-            if (invader.GetComponent<Collider2D>() == null) return false;
+            if (invader.GetComponent<Collider2D>() == null)
+            {
+                Criterion.globalLastKnownError = $"The object \"{invader.name}\" needs a Classifier2D component (e.g. BoxCollider2D).";
+                return false;
+            }
         }
 
         return true;
     }
 
-    List<Vector3> positionList = new List<Vector3>();
     public bool AllInvadersHaveRandomScripts()
     {
         var invaders = FiveObjectsContaining("Invader");
@@ -427,8 +567,16 @@ public class TutorialCallbacks : ScriptableObject
 
         foreach (var invader in invaders)
         {
-            if (invader.GetComponent("StartMovingInRandomDirection") == null) return false;
-            if (invader.GetComponent("StartRandomRotation") == null) return false;
+            if (invader.GetComponent("StartMovingInRandomDirection") == null)
+            {
+                Criterion.globalLastKnownError = $"The object \"{invader.name}\" is missing the \"StartMovingInRandomDirection\" script.";
+                return false;
+            }
+            if (invader.GetComponent("StartRandomRotation") == null)
+            {
+                Criterion.globalLastKnownError = $"The object \"{invader.name}\" is missing the \"StartRandomRotation\" script.";
+                return false;
+            }
         }
 
         return true;
@@ -438,11 +586,15 @@ public class TutorialCallbacks : ScriptableObject
         var invaders = FiveObjectsContaining("Invader");
         if (invaders == null) return false;
 
-        positionList.Clear();
+        var positionList = new List<Vector3>();
         foreach (var invader in invaders)
         {
             var position = invader.transform.position;
-            if (positionList.Contains(position)) return false;
+            if (positionList.Contains(position))
+            {
+                Criterion.globalLastKnownError = $"The object \"{invader.name}\" is at the same position {position} as another Invader. Spread them out.";
+                return false;
+            }
             positionList.Add(position);
         }
 
@@ -455,7 +607,11 @@ public class TutorialCallbacks : ScriptableObject
 
         foreach (var invader in invaders)
         {
-            if (invader.GetComponent("WrapAround") == null) return false;
+            if (invader.GetComponent("WrapAround") == null)
+            {
+                Criterion.globalLastKnownError = $"The object \"{invader.name}\" is missing the \"WrapAround\" script.";
+                return false;
+            }
         }
 
         return true;
@@ -464,30 +620,38 @@ public class TutorialCallbacks : ScriptableObject
 
     public bool AllBallsDifferentSizes()
     {
-        var invaders = FiveObjectsContaining("Ball");
-        if (invaders == null) return false;
+        var balls = FiveObjectsContaining("Ball");
+        if (balls == null) return false;
 
-        positionList.Clear();
-        foreach (var invader in invaders)
+        var sizeList = new List<Vector3>();
+        foreach (var ball in balls)
         {
-            var position = invader.transform.localScale;
-            if (positionList.Contains(position)) return false;
-            positionList.Add(position);
+            var size = ball.transform.localScale;
+            if (sizeList.Contains(size))
+            {
+                Criterion.globalLastKnownError = $"The object \"{ball.name}\" has the same size {size} as another Ball. Please change the scale of each ball.";
+                return false;
+            }
+            sizeList.Add(size);
         }
 
         return true;
     }
     public bool AllBallsDifferentRotations()
     {
-        var invaders = FiveObjectsContaining("Ball");
-        if (invaders == null) return false;
+        var balls = FiveObjectsContaining("Ball");
+        if (balls == null) return false;
 
-        positionList.Clear();
-        foreach (var invader in invaders)
+        var rotList = new List<Vector3>();
+        foreach (var ball in balls)
         {
-            var position = invader.transform.localEulerAngles;
-            if (positionList.Contains(position)) return false;
-            positionList.Add(position);
+            var rot = ball.transform.localEulerAngles;
+            if (rotList.Contains(rot))
+            {
+                Criterion.globalLastKnownError = $"The object \"{ball.name}\" has the same rotation {rot} as another Ball. Please rotate them differently.";
+                return false;
+            }
+            rotList.Add(rot);
         }
 
         return true;
@@ -495,24 +659,32 @@ public class TutorialCallbacks : ScriptableObject
 
     public bool AllBallsHaveColliders()
     {
-        var invaders = FiveObjectsContaining("Ball");
-        if (invaders == null) return false;
+        var balls = FiveObjectsContaining("Ball");
+        if (balls == null) return false;
 
-        foreach (var invader in invaders)
+        foreach (var ball in balls)
         {
-            if (invader.GetComponent<CircleCollider2D>() == null) return false;
+            if (ball.GetComponent<CircleCollider2D>() == null)
+            {
+                Criterion.globalLastKnownError = $"The object \"{ball.name}\" is missing a CircleCollider2D component.";
+                return false;
+            }
         }
 
         return true;
     }
     public bool AllBallsHaveCollideScript()
     {
-        var invaders = FiveObjectsContaining("Ball");
-        if (invaders == null) return false;
+        var balls = FiveObjectsContaining("Ball");
+        if (balls == null) return false;
 
-        foreach (var invader in invaders)
+        foreach (var ball in balls)
         {
-            if (invader.GetComponent("DestroyOnCollision") == null) return false;
+            if (ball.GetComponent<DestroyOnCollision>() == null)
+            {
+                Criterion.globalLastKnownError = $"The object \"{ball.name}\" is missing the \"DestroyOnCollision\" script.";
+                return false;
+            }
         }
 
         return true;
