@@ -134,7 +134,7 @@ MonoBehaviour:
           the radius field directly;\r\n\u2022 Pressing the left-mouse button on
           the word Radius and while holding the button, move the mouse left or right;
           or\r\n\u2022 Clicking the Edit Collider button and then dragging on the
-          Collider\u2019s handles in the Scene view.\r"
+          Collider\u2019s handles in the Scene view.\r\n"
       m_PollItems: []
       m_PollCorrectItemIndexes: 00000000
       m_Tutorial: {fileID: 0}
