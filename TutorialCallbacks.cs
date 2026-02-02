@@ -46,6 +46,19 @@ public class TutorialCallbacks : ScriptableObject
         }
         return null;
     }
+    
+    // Finds any object containing "Ball" (case-insensitive)
+    GameObject FindAnyBall()
+    {
+        var all = GameObject.FindObjectsByType<GameObject>(FindObjectsSortMode.None);
+        foreach(var go in all)
+        {
+            if (go.name.IndexOf("ball", System.StringComparison.OrdinalIgnoreCase) >= 0)
+                return go;
+        }
+        Criterion.globalLastKnownError = "Could not find any GameObject with 'Ball' in its name.";
+        return null;
+    }
 
     // Example callbacks for ArbitraryCriterion's BoolCallback
     public bool DoesFooExist()
@@ -96,15 +109,15 @@ public class TutorialCallbacks : ScriptableObject
     Vector3 initialPos;
     public void SetBallInitialPos()
     {
-        var ball = FindObject("Ball");
+        var ball = FindAnyBall();
         if (ball) initialPos = ball.transform.position;
     }
     public bool BallMovedDistance()
     {
-        var ball = FindObject("Ball");
+        var ball = FindAnyBall();
         if (ball == null)
         {
-            Criterion.globalLastKnownError = "Could not find a GameObject named \"Ball\".";
+             // error set in FindAnyBall
             return false;
         }
         
@@ -138,10 +151,10 @@ public class TutorialCallbacks : ScriptableObject
     }*/
     public bool SpriteModified()
     {
-        var ball = FindObject("Ball");
+        var ball = FindAnyBall();
         if (ball == null)
         {
-            Criterion.globalLastKnownError = "Could not find a GameObject named \"Ball\".";
+             // error set in FindAnyBall
             return false;
         }
 
