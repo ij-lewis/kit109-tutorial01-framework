@@ -70,7 +70,7 @@ public class TutorialCallbacks : ScriptableObject
     public bool SceneCalledMain()
     {
         var sceneName = UnityEditor.SceneManagement.EditorSceneManager.GetActiveScene().name;
-        if (sceneName.ToLower() != "main")
+        if (!sceneName.Equals("Main", System.StringComparison.OrdinalIgnoreCase))
         {
             Criterion.globalLastKnownError = $"The active scene is named \"{sceneName}\", but it should be named \"Main\".";
             return false;
@@ -445,7 +445,7 @@ public class TutorialCallbacks : ScriptableObject
             // 3. Extract just the name (e.g., "Menu")
             string name = Path.GetFileNameWithoutExtension(path);
 
-            var isCorrectName = name.ToLower().TrimEnd().TrimStart() == "invaderoids";
+            var isCorrectName = name.Trim().Equals("Invaderoids", System.StringComparison.OrdinalIgnoreCase);
 
             if (isCorrectName) correctNameFound = true;
         }
@@ -476,7 +476,7 @@ public class TutorialCallbacks : ScriptableObject
         //var allScenes = UnityEditor.SceneManagement.sceneCount;
         //Debug.Log("found: " + correctNameFound);
         var sceneName = UnityEditor.SceneManagement.EditorSceneManager.GetActiveScene().name;
-        var isCurrentSceneCorrectName = sceneName.ToLower().TrimStart().TrimEnd() == "invaderoids";
+        var isCurrentSceneCorrectName = sceneName.Trim().Equals("Invaderoids", System.StringComparison.OrdinalIgnoreCase);
 
         if (!isCurrentSceneCorrectName)
         {
@@ -515,7 +515,7 @@ public class TutorialCallbacks : ScriptableObject
         var all = GameObject.FindObjectsByType<GameObject>(FindObjectsSortMode.None);
         for (int i = 0; i < all.Length; i++)
         {
-            if (all[i].name.ToLower().Contains(name.ToLower()))
+            if (all[i].name.IndexOf(name, System.StringComparison.OrdinalIgnoreCase) >= 0)
             {
                 list.Add(all[i]);
             }
