@@ -1,0 +1,113 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89305aa391d1c5141bbe1628d930a2c5, type: 3}
+  m_Name: Tutorials
+  m_EditorClassIdentifier: 
+  HeaderBackground: {fileID: 2800000, guid: adc1e3df3f467c34cb47f573ffd2293e, type: 3}
+  Title:
+    m_Untranslated: KIT109 Tutorial 1 - Getting Started With Unity
+  Subtitle:
+    m_Untranslated: University of Tasmania
+  Description:
+    m_Untranslated: 
+  ProjectLayout: {fileID: 0}
+  currentTutorialSystemVersion: 1
+  currentTutorialContentVersion: 1
+  guildID: 1336888958734569616
+  tutorialID: tutorial1
+  tabNames: []
+  tabTooltips: []
+  basePackages: []
+  Sections:
+  - kit109Tutorial: -1
+    Heading:
+      m_Untranslated: Introduction
+    Text:
+      m_Untranslated: Learn about the Unity user interface and how files are stored.
+    Metadata: 
+    Url: 
+    Image: {fileID: 2800000, guid: 97c4c2b9786f0ca41b37f07e9ab930aa, type: 3}
+    IndexOfPrereqSection: -1
+    Tutorial: {fileID: 11400000, guid: b62f8f7581f0cca42932fe5763cd8438, type: 2}
+  - kit109Tutorial: -1
+    Heading:
+      m_Untranslated: Game Objects
+    Text:
+      m_Untranslated: The building blocks of every game, learn how to select and
+        create Game Objects.
+    Metadata: 
+    Url: 
+    Image: {fileID: 2800000, guid: 97c4c2b9786f0ca41b37f07e9ab930aa, type: 3}
+    IndexOfPrereqSection: 0
+    Tutorial: {fileID: 11400000, guid: 16a7a58f2c63e804fa2d0b4c03941d62, type: 2}
+  - kit109Tutorial: -1
+    Heading:
+      m_Untranslated: Components
+    Text:
+      m_Untranslated: Game Objects are made up of Components. Learn about them here.
+    Metadata: 
+    Url: 
+    Image: {fileID: 2800000, guid: 97c4c2b9786f0ca41b37f07e9ab930aa, type: 3}
+    IndexOfPrereqSection: 1
+    Tutorial: {fileID: 11400000, guid: 1e39dbae20b611d419b1752fcca5ae01, type: 2}
+  - kit109Tutorial: -1
+    Heading:
+      m_Untranslated: Physics
+    Text:
+      m_Untranslated: Start making your first Game Object interactions by making
+        balls move around the screen!
+    Metadata: 
+    Url: 
+    Image: {fileID: 2800000, guid: 97c4c2b9786f0ca41b37f07e9ab930aa, type: 3}
+    IndexOfPrereqSection: 2
+    Tutorial: {fileID: 11400000, guid: adb73a8b3814ed444b965a44b6526921, type: 2}
+  - kit109Tutorial: -1
+    Heading:
+      m_Untranslated: Scripts
+    Text:
+      m_Untranslated: Get your first taste of custom functionality with scripts.
+    Metadata: 
+    Url: 
+    Image: {fileID: 2800000, guid: 97c4c2b9786f0ca41b37f07e9ab930aa, type: 3}
+    IndexOfPrereqSection: 3
+    Tutorial: {fileID: 11400000, guid: df9c8a0ea69062846a858dd3c2a38187, type: 2}
+  - kit109Tutorial: -1
+    Heading:
+      m_Untranslated: Exercise
+    Text:
+      m_Untranslated: Complete this to get marked off this tutorial.
+    Metadata: 
+    Url: 
+    Image: {fileID: 2800000, guid: da615a7ab29fd944d94c2cb73e1b98d3, type: 3}
+    IndexOfPrereqSection: 4
+    Tutorial: {fileID: 11400000, guid: 2fc2cbe9363941844ac41ea83492d525, type: 2}
+  - kit109Tutorial: -1
+    Heading:
+      m_Untranslated: Homework
+    Text:
+      m_Untranslated: Further reading and useful information.
+    Metadata: 
+    Url: 
+    Image: {fileID: 2800000, guid: b3742cd59b62a25488810a1806c0aec2, type: 3}
+    IndexOfPrereqSection: 4
+    Tutorial: {fileID: 11400000, guid: b883fffce66608e44bb5ab42a91662ea, type: 2}
+  - kit109Tutorial: -1
+    Heading:
+      m_Untranslated: MyLO Quiz 1
+    Text:
+      m_Untranslated: Getting Started with Unity
+    Metadata: 
+    Url: https://mylo.utas.edu.au/d2l/le/content/691741/viewContent/5791213/View
+    Image: {fileID: 2800000, guid: f1b9caa53ea0e4d44bc3fba0aa501c60, type: 3}
+    IndexOfPrereqSection: 4
+    Tutorial: {fileID: 11400000, guid: b883fffce66608e44bb5ab42a91662ea, type: 2}
+  showBasePackages: 0

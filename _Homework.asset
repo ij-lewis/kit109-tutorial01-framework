@@ -1,0 +1,117 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff771ccdf4150419d9ff4d342b069aae, type: 3}
+  m_Name: _Homework
+  m_EditorClassIdentifier: 
+  m_Paragraphs:
+    m_Items:
+    - m_Type: 6
+      Title:
+        m_Untranslated: 
+      Text:
+        m_Untranslated: 
+      m_PollItems: []
+      m_PollCorrectItemIndexes: 00000000
+      m_Tutorial: {fileID: 0}
+      m_Image: {fileID: 0}
+      m_Video: {fileID: 0}
+      m_CriteriaCompletion: 0
+      m_Criteria:
+        m_Items: []
+      m_PossibleErrors: []
+      m_MaskingSettings:
+        m_MaskingEnabled: 0
+        m_UnmaskedViews:
+        - m_SelectorType: 0
+          m_ViewType:
+            m_TypeName: UnityEditor.AppStatusBar, UnityEditor, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          m_EditorWindowType:
+            m_TypeName: UnityEditor.InspectorWindow, UnityEditor, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          m_AlternateEditorWindowTypes:
+            m_Items: []
+          m_MaskType: 0
+          m_MaskSizeModifier: 0
+          m_UnmaskedControls: []
+      m_Summary: 
+      m_Description: 
+      m_InstructionBoxTitle: 
+      m_InstructionText: 
+      m_TutorialButtonText: 
+      codeBlockText: 
+    - m_Type: 0
+      Title:
+        m_Untranslated: Homework
+      Text:
+        m_Untranslated: "Before doing the next tutorial you <i>should</i>:\r\n\u2022
+          Watch the \u201CUsing the Interface\u201D series of Unity tutorial videos
+          to reinforce the materials in this practical at <a href=\"https://learn.unity.com/tutorial/using-the-unity-interface\">https://learn.unity.com/tutorial/using-the-unity-interface</a>  
+          (these are now considered out of date by Unity, but there are direct links to each video below). These videos cover:\r\n   - The Unity Interface: <a href=\"https://www.youtube.com/watch?v=D7v2pjke5sc\">https://www.youtube.com/watch?v=D7v2pjke5sc</a>\r\n   - The Scene View: <a href=\"https://www.youtube.com/watch?v=nG0fXdXylMI\">https://www.youtube.com/watch?v=nG0fXdXylMI</a>\r\n  
+          - The Game View: <a href=\"https://www.youtube.com/watch?v=w7RLUM9TBXY\">https://www.youtube.com/watch?v=w7RLUM9TBXY</a>\r\n   - The Hierarchy Window/Panel: <a href=\"https://www.youtube.com/watch?v=9rR3AS74UH0\">https://www.youtube.com/watch?v=9rR3AS74UH0</a>\r\n   - The Project Window/Panel: <a href=\"https://www.youtube.com/watch?v=4iT4Zhez-zw\">https://www.youtube.com/watch?v=4iT4Zhez-zw</a>\r\n   - The Inspector Window/Panel: <a href=\"https://www.youtube.com/watch?v=qltyYjFdyVc\">https://www.youtube.com/watch?v=qltyYjFdyVc</a>\r\n\u2022 Ensure you\u2019ve
+          finished the Exercise (you can show your tutor that you\u2019ve completed
+          it in the next Practical/Tutorial). \r\n\u2022 Complete the Practical 01 Quiz
+          on MyLO (but you can also do it later).\r\n"
+      m_PollItems: []
+      m_PollCorrectItemIndexes: 00000000
+      m_Tutorial: {fileID: 0}
+      m_Image: {fileID: 0}
+      m_Video: {fileID: 0}
+      m_CriteriaCompletion: 0
+      m_Criteria:
+        m_Items: []
+      m_PossibleErrors: []
+      m_MaskingSettings:
+        m_MaskingEnabled: 0
+        m_UnmaskedViews: []
+      m_Summary: 
+      m_Description: 
+      m_InstructionBoxTitle: 
+      m_InstructionText: 
+      m_TutorialButtonText: 
+      codeBlockText: 
+  m_CameraSettings:
+    m_CameraMode: 0
+    m_FocusMode: 0
+    m_Orthographic: 0
+    m_Size: 0
+    m_Pivot: {x: 0, y: 0, z: 0}
+    m_Rotation: {x: 0, y: 0, z: 0, w: 0}
+    m_FrameObject:
+      m_SceneGuid: 
+      m_GameObjectGuid: 
+      m_SerializedComponentType:
+        m_TypeName: 
+      m_ComponentIndex: 0
+      m_AssetObject: {fileID: 0}
+      m_Prefab: {fileID: 0}
+    m_Enabled: 0
+  NextButton:
+    m_Untranslated: Next
+  DoneButton:
+    m_Untranslated: Done
+  m_NextButton: Next
+  m_DoneButton: Done
+  m_CompletedSound: {fileID: 0}
+  m_autoAdvance: 0
+  m_OnBeforePageShown:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnAfterPageShown:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnBeforeTutorialQuit:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnTutorialPageStay:
+    m_PersistentCalls:
+      m_Calls: []

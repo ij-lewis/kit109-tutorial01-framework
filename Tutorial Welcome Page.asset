@@ -1,0 +1,69 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0885f594ab85594caa28e1a96cbe0d8, type: 3}
+  m_Name: Tutorial Welcome Page
+  m_EditorClassIdentifier: 
+  m_Image: {fileID: 2800000, guid: adc1e3df3f467c34cb47f573ffd2293e, type: 3}
+  m_WindowTitle:
+    m_Untranslated: KIT109 Games Fundamentals
+  m_Title:
+    m_Untranslated: Tutorial 01 - Getting Started in Unity
+  m_Description:
+    m_Untranslated: "In this practical you\u2019ll learn a number of Unity concepts
+      including:\r\n\n\u2022\tProjects;\r\n\u2022\tScenes;\r\n\u2022\tAssets;\r\n\u2022\tGame
+      Objects;\r\n\u2022\tThe Camera;\r\n\u2022\tComponents; \r\n\u2022\tColliders;
+      and\r\n\u2022\tAdding behaviours via scripting.\r\n\nAdditionally, you\u2019ll
+      learn the basic way that Unity operates and how to work within Unity to do
+      a number of tasks such as:\n\r\n\u2022\tCreating Projects;\r\n\u2022\tLaying
+      out Unity windows; \r\n\u2022\tImporting Assets;\r\n\u2022\tUsing the Inspector;\r\n\u2022\tCreating
+      simple Scenes; and\r\n\u2022\tRunning Projects.\r\n"
+  m_Buttons:
+  - Text:
+      m_Untranslated: Start Tutorial
+    Tooltip:
+      m_Untranslated: 
+    OnClick:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 11400000}
+          m_TargetAssemblyTypeName: Unity.Tutorials.Core.Editor.TutorialWelcomePage,
+            Unity.Tutorials.Core.Editor
+          m_MethodName: StartTutorial
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 1
+  - Text:
+      m_Untranslated: Close
+    Tooltip:
+      m_Untranslated: 
+    OnClick:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 11400000}
+          m_TargetAssemblyTypeName: Unity.Tutorials.Core.Editor.TutorialWelcomePage,
+            Unity.Tutorials.Core.Editor
+          m_MethodName: CloseCurrentModalDialog
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: 
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 1

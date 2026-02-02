@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f107dc6d4c984c45bdafd3bb15f98f0, type: 3}
+  m_Name: Tutorial01d-Physics
+  m_EditorClassIdentifier: 
+  TutorialTitle:
+    m_Untranslated: Tutorial 1d - Physics and Playing the Game
+  m_TutorialTitle: 
+  m_LessonId: 104
+  m_Version: 1
+  m_Scene: {fileID: 102900000, guid: 9eb2f6d881876294c809b109b2630c3b, type: 3}
+  m_OrOpenSceneName: 
+  m_DefaultSceneCameraSettings:
+    m_CameraMode: 0
+    m_FocusMode: 0
+    m_Orthographic: 0
+    m_Size: 0
+    m_Pivot: {x: 0, y: 0, z: 0}
+    m_Rotation: {x: 0, y: 0, z: 0, w: 0}
+    m_FrameObject:
+      m_SceneGuid: 
+      m_GameObjectGuid: 
+      m_SerializedComponentType:
+        m_TypeName: 
+      m_ComponentIndex: 0
+      m_AssetObject: {fileID: 0}
+      m_Prefab: {fileID: 0}
+    m_Enabled: 0
+  m_SkipTutorialBehavior: 0
+  m_WindowLayout: {fileID: 0}
+  m_Pages:
+    m_Items:
+    - {fileID: 11400000, guid: 5fde7d8e6908fc84fa0aedbc99c1c0dd, type: 2}
+    - {fileID: 11400000, guid: b854a29db4f3452468dd5f51fc8bee7e, type: 2}
+    - {fileID: 11400000, guid: 6164fad1c8a90a04b8dd55a0c33056b6, type: 2}
+    - {fileID: 11400000, guid: d4b85af0f87339247a4c2e9e9844183c, type: 2}
+    - {fileID: 11400000, guid: 3344212037b7beb4d94705c80cce369b, type: 2}
+    - {fileID: 11400000, guid: 37425d14b0dfd094eb46f6f64fa1da44, type: 2}
+    - {fileID: 11400000, guid: 7cb0dbb502977e042a9ca052a54391c2, type: 2}
+    - {fileID: 11400000, guid: 35d3ccfa7224dd54eba28ab72b1a992d, type: 2}
+    - {fileID: 11400000, guid: 206dbcdcb33ee2a4e81634189708b512, type: 2}
+    - {fileID: 11400000, guid: 263f2d40da265784d956897bf3050a48, type: 2}
+    - {fileID: 11400000, guid: ebf1fcd85dceb4442a90855a211c0558, type: 2}
+    - {fileID: 11400000, guid: 84288ffdad07b6a4a9ee42b0d04410a7, type: 2}

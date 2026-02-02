@@ -1,0 +1,8 @@
+{
+  "name": "com.kit109.tutorial01",
+  "displayName": "KIT109 Tutorial 01",
+  "version": "1.0.0",
+  "unity": "2022.3",
+  "description": "Interactive tutorial for KIT109.",
+  "dependencies": {}
+}

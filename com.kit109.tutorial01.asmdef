@@ -1,0 +1,19 @@
+{
+    "name": "com.kit109.tutorial01",
+    "rootNamespace": "",
+    "references": [
+        "Unity.Tutorials.Core.Editor",
+        "Unity.Tutorials.Core"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
