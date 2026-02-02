@@ -78,6 +78,48 @@ public class TutorialCallbacks : ScriptableObject
         return true;
     }
 
+    // step 12
+    public bool ThreeImagesExistAndOneIsNotBallOrInvader()
+    {
+        var guids = AssetDatabase.FindAssets("t:Texture");
+        var projectImages = new List<string>();
+        foreach (var g in guids)
+        {
+            var path = AssetDatabase.GUIDToAssetPath(g);
+            // Only count assets in the user's Assets folder, avoiding Packages etc.
+            if (path.StartsWith("Assets/", System.StringComparison.OrdinalIgnoreCase))
+            {
+                projectImages.Add(path);
+            }
+        }
+
+        if (projectImages.Count < 3)
+        {
+            Criterion.globalLastKnownError = $"No new images detected in the Assets folder.";
+            return false;
+        }
+
+        // Check if at least one is NOT named "Ball"
+        bool foundNonBallOrInvader = false;
+        foreach (var p in projectImages)
+        {
+            var name = Path.GetFileNameWithoutExtension(p);
+            if (!name.Equals("Ball", System.StringComparison.OrdinalIgnoreCase) && !name.Equals("Invader", System.StringComparison.OrdinalIgnoreCase))
+            {
+                foundNonBallOrInvader = true;
+                break;
+            }
+        }
+
+        if (!foundNonBallOrInvader)
+        {
+            Criterion.globalLastKnownError = "You have enough images, but all of them are (somehow) named \"Ball\" or \"Invader\". Please rename your imported image.";
+            return false;
+        }
+
+        return true;
+    }
+
     //step 17, step 27
     //step 17, step 27
     public bool DoesGameObjectWithNameExist(string name)
@@ -712,4 +754,5 @@ public class TutorialCallbacks : ScriptableObject
 
         return true;
     }
+
 }
