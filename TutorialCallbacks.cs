@@ -1,7 +1,9 @@
-﻿using UnityEngine;
-using UnityEditor;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using Unity.Tutorials.Core.Editor;
-using System.Collections.Generic;
+using UnityEditor;
+using UnityEngine;
 
 /// <summary>
 /// Implement your Tutorial callbacks here.
@@ -219,17 +221,67 @@ public class TutorialCallbacks : ScriptableObject
     }
 
     //step 41
-    public bool AtLeastOneWrapAround() 
+    //public bool AtLeastOneWrapAround() 
+    //{
+    //    var all = GameObject.FindObjectsByType <GameObject>(FindObjectsSortMode.None);
+    //    for (int i=0; i<all.Length; i++) {
+    //        if (all[i].name.Contains("Ball")) {
+    //            var c = all[i].GetComponent("WrapAround");
+    //            var rb = all[i].GetComponent<Rigidbody2D>();
+    //            if (c != null && rb != null) return true;
+    //        }
+    //    }
+    //    return false;
+    //}
+
+    public bool AtLeastOneWrapAround()
     {
-        var all = GameObject.FindObjectsByType <GameObject>(FindObjectsSortMode.None);
-        for (int i=0; i<all.Length; i++) {
-            if (all[i].name.Contains("Ball")) {
-                var c = all[i].GetComponent("WrapAround");
-                var rb = all[i].GetComponent<Rigidbody2D>();
-                if (c != null && rb != null) return true;
-            }
+        // 1. Get all GameObjects in the scene
+        var allObjects = GameObject.FindObjectsByType<GameObject>(FindObjectsSortMode.None);
+
+        if (allObjects.Length == 0)
+        {
+            Criterion.globalLastKnownError = "No GameObjects found.";
+            //Debug.Log("From callback: " + TutorialParagraph.lastKnownError);
+            return false;
+        }    
+
+        // 2. Filter for objects with "Ball" in the name
+        var ballObjects = allObjects.Where(obj => obj.name.Contains("Ball"));
+
+        if (ballObjects.Count() == 0)
+        {
+            Criterion.globalLastKnownError = "No GameObjects found with part of their name as \"Ball\".";
+            //Debug.Log("From callback: " + TutorialParagraph.lastKnownError);
+            return false;
         }
-        return false;
+
+        // 3. Filter for objects that have BOTH the "WrapAround" component and a Rigidbody2D
+        // Note: GetComponent(string) returns a Component, so we check for null
+        var objectsWithWrapAround = ballObjects.Where(obj =>
+            obj.GetComponent("WrapAround") != null
+        );
+
+        if (objectsWithWrapAround.Count() == 0)
+        {
+            Criterion.globalLastKnownError = "No balls found containing the WrapAround script.";
+            //Debug.Log("From callback: " + Criterion.globalLastKnownError);
+            return false;
+        }
+
+        var objectsWithRigidbody = objectsWithWrapAround.Where(obj =>
+            obj.GetComponent<Rigidbody2D>() != null
+        );
+
+        if (objectsWithRigidbody.Count() == 0)
+        {
+            Criterion.globalLastKnownError = "Balls with the WrapAround script need to also have a RigidBody2D component (so they can move).";
+            //Debug.Log("From callback: " + TutorialParagraph.lastKnownError);
+            return false;
+        }
+
+        // 4. Return true if any objects remain in the filtered collection
+        return objectsWithRigidbody.Any();
     }
 
 
@@ -245,8 +297,59 @@ public class TutorialCallbacks : ScriptableObject
     //Exercises
     public bool SceneCalledInvaderoids()
     {
+        string[] guids = AssetDatabase.FindAssets("t:Scene");
+
+        Debug.Log($"Found {guids.Length} scenes in the project:");
+
+        var correctNameFound = false;
+        foreach (string guid in guids)
+        {
+            // 2. Get the full path (e.g., "Assets/Scenes/Menu.unity")
+            string path = AssetDatabase.GUIDToAssetPath(guid);
+
+            // 3. Extract just the name (e.g., "Menu")
+            string name = Path.GetFileNameWithoutExtension(path);
+
+            var isCorrectName = name.ToLower().TrimEnd().TrimStart() == "invaderoids";
+
+            if (isCorrectName) correctNameFound = true;
+        }
+
+        if (!correctNameFound)
+        {
+            Criterion.globalLastKnownError = "Scene named exactly \"Invaderoids\" not found. Founds scenes called:";
+            bool first = true;
+            foreach (string guid in guids)
+            {
+                // 2. Get the full path (e.g., "Assets/Scenes/Menu.unity")
+                string path = AssetDatabase.GUIDToAssetPath(guid);
+
+                if (path.StartsWith("Assets/"))
+                {
+                    // 3. Extract just the name (e.g., "Menu")
+                    string name = Path.GetFileNameWithoutExtension(path);
+
+                    if (!first) Criterion.globalLastKnownError += ",";
+                    Criterion.globalLastKnownError += " \"" + name + "\"";
+                    first = false;
+                }
+            }
+            Criterion.globalLastKnownError += ".<br><br>Check your spelling!";
+            return false;
+        }
+
+        //var allScenes = UnityEditor.SceneManagement.sceneCount;
+        Debug.Log("found: " + correctNameFound);
         var sceneName = UnityEditor.SceneManagement.EditorSceneManager.GetActiveScene().name;
-        return sceneName.ToLower() == "invaderoids";
+        var isCurrentSceneCorrectName = sceneName.ToLower().TrimStart().TrimEnd() == "invaderoids";
+
+        if (!isCurrentSceneCorrectName)
+        {
+            Criterion.globalLastKnownError = "\"Invaderoids\" scene found, but it's not the current open scene.";
+            return false;
+        }
+
+        return true;
     }
 
     static List<GameObject> list = new List<GameObject>();
