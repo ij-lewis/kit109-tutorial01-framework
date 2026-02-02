@@ -54,7 +54,7 @@ MonoBehaviour:
         m_Untranslated: Making Collisions Happen
       Text:
         m_Untranslated: If you have done everything correctly, the first ball should
-          collide with the second and react in a somewhat realistic physical way. How cool is that?!
+          collide with the ball below it and react in a somewhat realistic physical way. How cool is that?!
       m_PollItems: []
       m_PollCorrectItemIndexes: 00000000
       m_Tutorial: {fileID: 0}

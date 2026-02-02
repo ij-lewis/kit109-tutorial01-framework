@@ -53,7 +53,7 @@ MonoBehaviour:
       Title:
         m_Untranslated: Making Collisions Happen
       Text:
-        m_Untranslated: "In the Scene pane you should see apart from the usual selection
+        m_Untranslated: "In the Scene pane you should see that apart from the usual selection
           rectangle, there is now also a circle displayed on the object that represents
           the shape of the object's collision area. \r\nThis collision area doesn't
           exactly match the size of the ball, so let's modify it so it's a closer
@@ -134,7 +134,7 @@ MonoBehaviour:
           the radius field directly;\r\n\u2022 Pressing the left-mouse button on
           the word Radius and while holding the button, move the mouse left or right;
           or\r\n\u2022 Clicking the Edit Collider button and then dragging on the
-          Collider\u2019s handles in the Scene view.\r\n"
+          Collider\u2019s handles in the Scene view.\r\n\r\n\r\n"
       m_PollItems: []
       m_PollCorrectItemIndexes: 00000000
       m_Tutorial: {fileID: 0}

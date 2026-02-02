@@ -124,7 +124,7 @@ MonoBehaviour:
         m_Untranslated: "If you\u2019ve done this correctly when you run the game
           the Ball should fall off the bottom of the screen but reappear at the top
           (it should fall faster and faster, just like in the game Portal: \"speedy
-          thing goes in speedy thing comes out\").\r"
+          thing goes in, speedy thing comes out\").\r"
       m_PollItems: []
       m_PollCorrectItemIndexes: 00000000
       m_Tutorial: {fileID: 0}

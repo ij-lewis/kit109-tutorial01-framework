@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09cf94368c18acd4b87b173cdb62b502, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lastKnownError: 
+  previousError: 
   m_TargetTool: 1
 --- !u!114 &11400000
 MonoBehaviour:
@@ -36,6 +38,7 @@ MonoBehaviour:
       m_PollCorrectItemIndexes: 00000000
       m_Tutorial: {fileID: 0}
       m_Image: {fileID: 0}
+      disableImagePopup: 0
       m_Video: {fileID: 0}
       m_CriteriaCompletion: 0
       m_Criteria:
@@ -66,6 +69,17 @@ MonoBehaviour:
           m_MaskType: 0
           m_MaskSizeModifier: 0
           m_UnmaskedControls: []
+        - m_SelectorType: 1
+          m_ViewType:
+            m_TypeName: 
+          m_EditorWindowType:
+            m_TypeName: Unity.Hierarchy.Editor.HierarchyWindow, UnityEditor.HierarchyModule,
+              Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+          m_AlternateEditorWindowTypes:
+            m_Items: []
+          m_MaskType: 0
+          m_MaskSizeModifier: 0
+          m_UnmaskedControls: []
       m_Summary: 
       m_Description: 
       m_InstructionBoxTitle: 
@@ -89,6 +103,7 @@ MonoBehaviour:
       m_PollCorrectItemIndexes: 00000000
       m_Tutorial: {fileID: 0}
       m_Image: {fileID: 0}
+      disableImagePopup: 0
       m_Video: {fileID: 0}
       m_CriteriaCompletion: 0
       m_Criteria:
@@ -113,6 +128,7 @@ MonoBehaviour:
       m_PollCorrectItemIndexes: 00000000
       m_Tutorial: {fileID: 0}
       m_Image: {fileID: 0}
+      disableImagePopup: 0
       m_Video: {fileID: 0}
       m_CriteriaCompletion: 0
       m_Criteria:
@@ -196,6 +212,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7231e8df50e16c74c979c4a2affab91b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lastKnownError: 
+  previousError: 
   m_Callback:
     _target: {fileID: 11400000, guid: b7a7538c4c55c3341891a77bf61f8be5, type: 2}
     _methodName: ObjectSelected

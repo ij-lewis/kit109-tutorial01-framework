@@ -452,7 +452,7 @@ public class TutorialCallbacks : ScriptableObject
 
         if (objectsWithRigidbody.Count() == 0)
         {
-            Criterion.globalLastKnownError = "Balls with the WrapAround script need to also have a RigidBody2D component (so they can move).";
+            Criterion.globalLastKnownError = "Balls with the WrapAround script need to also have a RigidBody2D component (so they can move). Maybe you've added the script to the wrong ball?";
             //Debug.Log("From callback: " + TutorialParagraph.lastKnownError);
             return false;
         }
