@@ -96,7 +96,6 @@ public class TutorialCallbacks : ScriptableObject
         var dist = (ball.transform.position - initialPos).magnitude;
         if (dist <= 1)
         {
-            Debug.Log($"DISTANCE: {dist:F2} {dist} {ball.transform.position} {initialPos}");
             Criterion.globalLastKnownError = $"The Ball has moved {dist:F2} units, but needs to move at least 1 unit.";
             //if (dist == 0)
             //{
@@ -420,7 +419,7 @@ public class TutorialCallbacks : ScriptableObject
     {
         string[] guids = AssetDatabase.FindAssets("t:Scene");
 
-        Debug.Log($"Found {guids.Length} scenes in the project:");
+        //Debug.Log($"Found {guids.Length} scenes in the project:");
 
         var correctNameFound = false;
         foreach (string guid in guids)
@@ -460,7 +459,7 @@ public class TutorialCallbacks : ScriptableObject
         }
 
         //var allScenes = UnityEditor.SceneManagement.sceneCount;
-        Debug.Log("found: " + correctNameFound);
+        //Debug.Log("found: " + correctNameFound);
         var sceneName = UnityEditor.SceneManagement.EditorSceneManager.GetActiveScene().name;
         var isCurrentSceneCorrectName = sceneName.ToLower().TrimStart().TrimEnd() == "invaderoids";
 
