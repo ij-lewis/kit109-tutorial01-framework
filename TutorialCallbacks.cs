@@ -552,7 +552,7 @@ public class TutorialCallbacks : ScriptableObject
         {
             if (invader.GetComponent<Collider2D>() == null)
             {
-                Criterion.globalLastKnownError = $"The object \"{invader.name}\" needs a Classifier2D component (e.g. BoxCollider2D).";
+                Criterion.globalLastKnownError = $"The object \"{invader.name}\" needs a Collider2D component (e.g. PolygonCollider2D).";
                 return false;
             }
         }
@@ -653,6 +653,15 @@ public class TutorialCallbacks : ScriptableObject
             }
             rotList.Add(rot);
         }
+        foreach (var ball in balls)
+        {
+            var rot = ball.transform.localEulerAngles;
+            if (rot.x != 0 || rot.y != 0)
+            {
+                Criterion.globalLastKnownError = $"We are working in 2D, but <go>{ball.name}</go> has rotations on more than just the Z-axis: {rot}. Please set the X- and Y-axis rotations to zero.";
+                return false;
+            }
+        }
 
         return true;
     }
@@ -680,7 +689,7 @@ public class TutorialCallbacks : ScriptableObject
 
         foreach (var ball in balls)
         {
-            if (ball.GetComponent<DestroyOnCollision>() == null)
+            if (ball.GetComponent("DestroyOnCollision") == null)
             {
                 Criterion.globalLastKnownError = $"The object \"{ball.name}\" is missing the \"DestroyOnCollision\" script.";
                 return false;
