@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: Tutorial Project Settings
   m_EditorClassIdentifier: 
   m_WelcomePage: {fileID: 11400000, guid: 915204cbb8fc1e94e8360779bb0a22fb, type: 2}
-  m_InitialScene: {fileID: 0}
+  m_InitialScene: {fileID: 102900000, guid: 9eb2f6d881876294c809b109b2630c3b, type: 3}
   m_InitialCameraSettings:
     m_CameraMode: 0
     m_FocusMode: 0
     m_Orthographic: 1
     m_Size: 10
-    m_Pivot: {x: 0, y: 0, z: 0}
+    m_Pivot: {x: 0, y: 0, z: -10}
     m_Rotation: {x: 0, y: 0, z: 0, w: 1}
     m_FrameObject:
       m_SceneGuid: 
